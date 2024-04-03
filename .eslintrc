@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "wesbos"
+  ],
+  "rules": {
+    "no-console": 0,
+    "semi": "error",
+    "no-unused-variable": [true, {"ignore-pattern": "^_"}]
+  }
+}

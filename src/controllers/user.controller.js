@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { User, User } from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asynchandler.js";
 import { apiResponse } from "../utils/apiresponse.js";
 import { upload_on_cloudinary } from "../utils/cloudinary.js";
 import { generatwAccesssAndRefreshToken } from "../utils/generateAccessAndRefreshToken.js";
-import { JsonWebTokenError } from "jsonwebtoken";
+
 import mongoose from "mongoose";
 const registerUser = asyncHandler(async (req, res) => {
     const reqestBody = req.body;
@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const existUser = await User.findOne({
         $or: [{ username }, { email }],
     });
-    console.log("existuser", existUser);
+
     if (existUser) {
         throw new ApiError(400, "User already exists");
     }
@@ -73,7 +73,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 const loginUser = asyncHandler(async (req, res) => {
     const reqestBody = req.body;
-
+    console.log("body", reqestBody);
     const UserSchema = z.union([
         z.object({
             username: z.string().min(1, "Username is not valid"),
@@ -91,6 +91,7 @@ const loginUser = asyncHandler(async (req, res) => {
     try {
         const validation = UserSchema.parse(reqestBody);
     } catch (error) {
+        console.log(" error : ", error);
         throw new ApiError(400, error.issues[0].message, error.issues);
     }
     const { username, email, password } = req.body;
@@ -383,4 +384,5 @@ export {
     getCurrentUser,
     updateAccountDtailsTextbased,
     UpdateUserAvatar,
+    UserHistory,
 };

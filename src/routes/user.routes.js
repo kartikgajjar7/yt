@@ -7,7 +7,7 @@ import {
     registerUser,
 } from "../controllers/user.controller.js";
 import { VerifyJWT } from "../middlewares/auth.middleware.js";
-import { verify } from "jsonwebtoken";
+
 const router = Router();
 
 //users->register : post method
